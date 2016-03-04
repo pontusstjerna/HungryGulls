@@ -25,9 +25,9 @@ public class MainController implements ActionListener {
     }
 
     public void startGame(){
+        initWorld();
         initView();
         initTimer();
-        initWorld();
         timer.start();
         System.out.println("Game started!");
     }
@@ -37,7 +37,6 @@ public class MainController implements ActionListener {
         world.update();
         frame.repaint();
         setDeltaTime();
-        System.out.println("DeltaTime: " + deltaTime);
     }
 
     public double getDeltaTime(){
@@ -46,7 +45,7 @@ public class MainController implements ActionListener {
 
     private void initView(){
         frame = new MainWindow("Hungry Gulls");
-        frame.init();
+        frame.init(world.getDrawables());
 
         System.out.println("View initialized!");
     }

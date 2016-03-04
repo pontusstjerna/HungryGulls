@@ -1,15 +1,20 @@
 package view;
 
+import model.IDrawable;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * Created by Pontus on 2016-03-04.
  */
 public class MainSurface extends JPanel {
+    List<IDrawable> drawables;
 
-    public void init(){
+    public void init(List<IDrawable> drawables){
         setFocusable(true);
+        this.drawables = drawables;
     }
 
     @Override
@@ -18,6 +23,8 @@ public class MainSurface extends JPanel {
 
         super.paintComponent(g);
 
-        g.drawString("This is a text. ", 100,100);
+        for(IDrawable drawable : drawables){
+            g.drawString(drawable.toString(), drawable.getX(), drawable.getY());
+        }
     }
 }

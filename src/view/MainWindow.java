@@ -1,6 +1,9 @@
 package view;
 
+import model.IDrawable;
+
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Created by Pontus on 2016-03-04.
@@ -16,9 +19,9 @@ public class MainWindow extends JFrame {
         this.title = title;
     }
 
-    public void init(){
+    public void init(List<IDrawable> drawables){
         initWindow();
-        initSurface();
+        initSurface(drawables);
     }
 
     @Override
@@ -34,9 +37,9 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    private void initSurface(){
+    private void initSurface(List<IDrawable> drawables){
         surface = new MainSurface();
-        surface.init();
+        surface.init(drawables);
         add(surface);
     }
 }
