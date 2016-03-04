@@ -21,6 +21,11 @@ public class MainWindow extends JFrame {
         initSurface();
     }
 
+    @Override
+    public void repaint(){
+        surface.repaint();
+    }
+
     private void initWindow(){
         setTitle(title);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
