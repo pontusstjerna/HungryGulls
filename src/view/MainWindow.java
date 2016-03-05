@@ -3,6 +3,7 @@ package view;
 import model.IDrawable;
 
 import javax.swing.*;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 /**
@@ -27,6 +28,10 @@ public class MainWindow extends JFrame {
     @Override
     public void repaint(){
         surface.repaint();
+    }
+
+    public void registerKeyListener(KeyListener listener){
+        surface.addKeyListener(listener);
     }
 
     private void initWindow(){

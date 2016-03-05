@@ -1,6 +1,7 @@
 package model;
 
 import model.character.CharacterFactory;
+import model.character.characters.IPlayable;
 import model.character.characters.PlayerGull;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by Pontus on 2016-03-04.
  */
 public class World {
-    private PlayerGull player;
+    private IPlayable player;
     private List<IDrawable> characters = new ArrayList<>();
 
     public World(){
@@ -21,7 +22,7 @@ public class World {
 
     }
 
-    public PlayerGull getPlayer(){
+    public IPlayable getPlayer(){
         return player;
     }
 
@@ -39,5 +40,6 @@ public class World {
         player = CharacterFactory.createPlayer("Player", 100, 100);
         characters.add(player);
         characters.add(CharacterFactory.createMackerel("Mackerel 1", 100, 200));
+        characters.add(CharacterFactory.createMackerel("Mackerel 2", 500, 100));
     }
 }

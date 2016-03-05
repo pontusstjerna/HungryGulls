@@ -1,5 +1,7 @@
 package model.character;
 
+import model.IDrawable;
+import model.character.characters.IPlayable;
 import model.character.characters.Mackerel;
 import model.character.characters.PlayerGull;
 
@@ -8,11 +10,11 @@ import model.character.characters.PlayerGull;
  */
 public class CharacterFactory {
 
-    public static PlayerGull createPlayer(String name, double x, double y){
+    public static IPlayable createPlayer(String name, double x, double y){
         return new PlayerGull(name, x, y);
     }
 
-    public static Character createMackerel(String name, double x, double y){
+    public static IDrawable createMackerel(String name, double x, double y){
         return new Mackerel(name, x, y);
     }
 

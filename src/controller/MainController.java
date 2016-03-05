@@ -1,6 +1,7 @@
 package controller;
 
 import model.World;
+import model.character.characters.IPlayable;
 import view.MainWindow;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class MainController implements ActionListener {
     private MainWindow frame;
     private Timer timer;
     private World world;
+    private PlayerController playerController;
 
     private double tempTime;
     private double deltaTime;
@@ -26,6 +28,7 @@ public class MainController implements ActionListener {
 
     public void startGame(){
         initWorld();
+        initPlayerControls();
         initView();
         initTimer();
         timer.start();
@@ -34,6 +37,7 @@ public class MainController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
+        playerController.update();
         world.update();
         frame.repaint();
         setDeltaTime();
@@ -43,9 +47,14 @@ public class MainController implements ActionListener {
         return deltaTime;
     }
 
+    private void initPlayerControls(){
+        playerController = new PlayerController(world.getPlayer());
+    }
+
     private void initView(){
         frame = new MainWindow("Hungry Gulls");
         frame.init(world.getDrawables());
+        frame.registerKeyListener(playerController);
 
         System.out.println("View initialized!");
     }

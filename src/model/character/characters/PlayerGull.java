@@ -6,14 +6,17 @@ import model.character.PickUpAble;
 /**
  * Created by Pontus on 2016-03-04.
  */
-public class PlayerGull extends Character {
+public class PlayerGull extends Character implements IPlayable {
     private int health = 100;
     private PickUpAble pickedUp;
 
     public PlayerGull(String name, double x, double y){
         super(name, x, y);
+        speedX /= 2;
+        speedY /= 2;
     }
 
+    @Override
     public void pickUp(){
         PickUpAble closest = closestPickup();
         if(pickUpWithinReach(closest, 2)){
