@@ -39,7 +39,7 @@ public class World {
     private void createCharacters(){
         player = CharacterFactory.createPlayer("Player", 100, 100);
         characters.add(player);
-        characters.add(CharacterFactory.createMackerel("Mackerel 1", 100, 200));
-        characters.add(CharacterFactory.createMackerel("Mackerel 2", 500, 100));
+        characters.add(CharacterFactory.createMackerel("Mackerel 1", 100, 300));
+        characters.add(CharacterFactory.createMackerel("Mackerel 2", 100, 50));
     }
 }

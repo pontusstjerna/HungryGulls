@@ -14,8 +14,10 @@ public abstract class PickUpAble extends Character {
         pickUpAbles.add(this);
     }
 
-    protected void lockToCharacter(Character character){
-
+    public void lockToCharacter(Character character){
+        x = character.getX();
+        y = character.getY();
+        System.out.println(name + " locked to " + character);
     }
 
 

@@ -59,6 +59,9 @@ public class PlayerController implements KeyListener {
             case KeyEvent.VK_DOWN:
                 movements.remove(Direction.DOWN);
                 break;
+            case KeyEvent.VK_SPACE:
+                player.pickUp();
+                break;
         }
     }
 

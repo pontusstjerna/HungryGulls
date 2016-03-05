@@ -12,23 +12,23 @@ public class PlayerGull extends Character implements IPlayable {
 
     public PlayerGull(String name, double x, double y){
         super(name, x, y);
-        speedX /= 2;
-        speedY /= 2;
+        speedX /= 1;
+        speedY /= 1;
     }
 
     @Override
     public void pickUp(){
         PickUpAble closest = closestPickup();
-        if(pickUpWithinReach(closest, 2)){
+        if(pickUpWithinReach(closest, 10)){
             pickedUp = closest;
-            System.out.println("Picked up " + closest);
+            closest.lockToCharacter(this);
         }
     }
 
     private PickUpAble closestPickup(){
         PickUpAble closest = PickUpAble.pickUpAbles.get(0);
         for(PickUpAble pickUp : PickUpAble.pickUpAbles){
-            if(pickUp.getDistance(x,y) > closest.getDistance(x,y)){
+            if(pickUp.getDistance(x,y) < closest.getDistance(x,y)){
                 closest = pickUp;
             }
         }

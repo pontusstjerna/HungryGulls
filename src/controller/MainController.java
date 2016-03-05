@@ -1,5 +1,6 @@
 package controller;
 
+import model.IDrawable;
 import model.World;
 import model.character.characters.IPlayable;
 import view.MainWindow;
@@ -7,6 +8,8 @@ import view.MainWindow;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Pontus on 2016-03-04.
