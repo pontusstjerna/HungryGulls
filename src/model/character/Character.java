@@ -1,8 +1,11 @@
 package model.character;
 
 import model.IDrawable;
+import model.ImageHandler;
+import model.World;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,7 @@ public abstract class Character implements IDrawable {
     public enum Direction {RIGHT, LEFT, UP, DOWN}
     public List<Character> characters = new ArrayList<>();
 
+    protected BufferedImage image;
     protected Point.Double position;
     protected double speedX = 1;
     protected double speedY = 1;
@@ -22,6 +26,7 @@ public abstract class Character implements IDrawable {
         characters.add(this);
         this.name = name;
         position = new Point.Double(x,y);
+        image = ImageHandler.loadImage(getClass().getSimpleName());
     }
 
     public double getDistance(double x, double y){
@@ -34,6 +39,11 @@ public abstract class Character implements IDrawable {
 
     public double getDistance(Point.Double position){
         return position.distance(this.position);
+    }
+
+    @Override
+    public BufferedImage getImage(){
+        return image;
     }
 
     @Override
@@ -68,19 +78,38 @@ public abstract class Character implements IDrawable {
         return name + " X: " + position.x + " Y: " + position.y + " SpeedX: " + speedX + " SpeedY: " + speedY;
     }
 
+    /*
+    private BufferedImage loadImage(){
+        BufferedImage image = null;
+            try{
+                image = ImageIO.read(getClass().getResource("/model/images/" + name + ".png"));
+            }catch(IOException e){
+                System.out.println("Unable to load " + name + ".png! This was the cause: " + e.toString());
+            }
+        return image;
+    }*/
+
     private void moveRight(){
-        position.x += speedX;
+        if(position.x < World.WORLD_WIDTH) {
+            position.x += speedX;
+        }
     }
 
     private void moveLeft(){
-        position.x -= speedX;
+        if(position.x > 0){
+            position.x -= speedX;
+        }
     }
 
     private void moveUp(){
-        position.y -= speedY;
+        if(position.y > 0) {
+            position.y -= speedY;
+        }
     }
 
     private void moveDown(){
-        position.y += speedY;
+        if(position.y < World.WORLD_HEIGHT) {
+            position.y += speedY;
+        }
     }
 }
