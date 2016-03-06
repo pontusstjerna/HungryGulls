@@ -9,4 +9,6 @@ import model.character.Character;
 public interface IPlayable extends IDrawable{
     void move(Character.Direction direction);
     void pickUp();
+    void drop();
+    boolean hasPickup();
 }

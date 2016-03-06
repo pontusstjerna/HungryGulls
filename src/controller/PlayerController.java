@@ -60,7 +60,11 @@ public class PlayerController implements KeyListener {
                 movements.remove(Direction.DOWN);
                 break;
             case KeyEvent.VK_SPACE:
-                player.pickUp();
+                if(!player.hasPickup()){
+                    player.pickUp();
+                }else{
+                    player.drop();
+                }
                 break;
         }
     }

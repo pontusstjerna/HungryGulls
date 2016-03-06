@@ -18,17 +18,32 @@ public class PlayerGull extends Character implements IPlayable {
 
     @Override
     public void pickUp(){
-        PickUpAble closest = closestPickup();
-        if(pickUpWithinReach(closest, 10)){
-            pickedUp = closest;
-            closest.lockToCharacter(this);
+        if(pickedUp == null){
+            PickUpAble closest = closestPickup();
+            if(pickUpWithinReach(closest, 10)){
+                pickedUp = closest;
+                closest.lockToCharacter(this);
+            }
         }
+    }
+
+    @Override
+    public void drop(){
+        if(pickedUp != null){
+            pickedUp.unlock();
+            pickedUp = null;
+        }
+    }
+
+    @Override
+    public boolean hasPickup(){
+        return pickedUp != null;
     }
 
     private PickUpAble closestPickup(){
         PickUpAble closest = PickUpAble.pickUpAbles.get(0);
         for(PickUpAble pickUp : PickUpAble.pickUpAbles){
-            if(pickUp.getDistance(x,y) < closest.getDistance(x,y)){
+            if(pickUp.getDistance(position) < closest.getDistance(position)){
                 closest = pickUp;
             }
         }
@@ -36,6 +51,6 @@ public class PlayerGull extends Character implements IPlayable {
     }
 
     private boolean pickUpWithinReach(PickUpAble pickUp, double minDistance){
-        return (pickUp.getDistance(x,y) <= minDistance);
+        return (pickUp.getDistance(position) <= minDistance);
     }
 }

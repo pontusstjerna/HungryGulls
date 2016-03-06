@@ -2,6 +2,7 @@ package model.character;
 
 import model.IDrawable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public abstract class Character implements IDrawable {
     public enum Direction {RIGHT, LEFT, UP, DOWN}
     public List<Character> characters = new ArrayList<>();
 
-    protected double x,y;
+    protected Point.Double position;
     protected double speedX = 1;
     protected double speedY = 1;
     protected String name = "Unnamed.";
@@ -20,26 +21,29 @@ public abstract class Character implements IDrawable {
     public Character(String name, double x, double y){
         characters.add(this);
         this.name = name;
-        this.x = x;
-        this.y = y;
+        position = new Point.Double(x,y);
     }
 
     public double getDistance(double x, double y){
-        double dx = this.x - x;
-        double dy = this.y - y;
+        double dx = position.x - x;
+        double dy = position.y - y;
 
         //Pythagoras
         return Math.sqrt((dx*dx) + (dy*dy));
     }
 
+    public double getDistance(Point.Double position){
+        return position.distance(this.position);
+    }
+
     @Override
     public int getX(){
-        return (int)x;
+        return (int)position.x;
     }
 
     @Override
     public int getY(){
-        return (int)y;
+        return (int)position.y;
     }
 
     public void move(Direction dir){
@@ -61,22 +65,22 @@ public abstract class Character implements IDrawable {
 
     @Override
     public String toString(){
-        return name + " X: " + x + " Y: " + y + " SpeedX: " + speedX + " SpeedY: " + speedY;
+        return name + " X: " + position.x + " Y: " + position.y + " SpeedX: " + speedX + " SpeedY: " + speedY;
     }
 
     private void moveRight(){
-        x += speedX;
+        position.x += speedX;
     }
 
     private void moveLeft(){
-        x -= speedX;
+        position.x -= speedX;
     }
 
     private void moveUp(){
-        y -= speedY;
+        position.y -= speedY;
     }
 
     private void moveDown(){
-        y += speedY;
+        position.y += speedY;
     }
 }

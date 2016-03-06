@@ -1,5 +1,6 @@
 package model.character;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,12 @@ public abstract class PickUpAble extends Character {
     }
 
     public void lockToCharacter(Character character){
-        x = character.getX();
-        y = character.getY();
+        position = character.position;
         System.out.println(name + " locked to " + character);
+    }
+
+    public void unlock(){
+        position = new Point.Double(getX(), getY());
     }
 
 
