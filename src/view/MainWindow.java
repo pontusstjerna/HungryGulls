@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -50,12 +51,14 @@ public class MainWindow extends JFrame implements ComponentListener {
     }
 
     private MainSurface initSurface(List<IDrawable> drawables){
-        return new MainSurface(drawables, createBackground());
+        return new MainSurface(drawables, createForeground(), createBackground());
     }
 
-    private Image createBackground(){
+    private BufferedImage createBackground(){
         return ImageHandler.loadImage("Background");
     }
+
+    private BufferedImage createForeground(){return ImageHandler.loadImage("World");}
 
     @Override
     public void componentResized(ComponentEvent e) {

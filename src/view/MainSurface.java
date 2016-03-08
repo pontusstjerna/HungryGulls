@@ -4,6 +4,7 @@ import model.IDrawable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -11,15 +12,19 @@ import java.util.List;
  */
 public class MainSurface extends JPanel {
     List<IDrawable> drawables;
-    Image background;
+    IDrawable player;
+    BufferedImage background;
+    BufferedImage world;
 
     private int scaleX = 1;
     private int scaleY = 1;
 
-    public MainSurface(List<IDrawable> drawables, Image background){
+    public MainSurface(List<IDrawable> drawables, BufferedImage world, BufferedImage background){
         setFocusable(true);
         this.drawables = drawables;
+        player = drawables.get(0);
         this.background = background;
+        this.world = world;
         System.out.println("Surface initialized!");
     }
 
@@ -29,13 +34,14 @@ public class MainSurface extends JPanel {
         super.paintComponent(g);
 
         paintBackground(g2d);
+        paintForeground(g2d);
         paintDrawables(g2d);
         paintPlayer(g2d);
     }
 
     private void paintPlayer(Graphics2D g){
-        g.drawImage(drawables.get(0).getImage(),
-                (MainWindow.WINDOW_WIDTH/2), //Should be player.width/2
+        g.drawImage(player.getImage(),
+                (MainWindow.WINDOW_WIDTH/2),
                 (MainWindow.WINDOW_HEIGHT/2),
                 this);
     }
@@ -43,16 +49,31 @@ public class MainSurface extends JPanel {
     private void paintDrawables(Graphics2D g){ //From model to view coordinates
         for(int i = 1; i < drawables.size(); i++){ //Loop without first element
             g.drawImage(drawables.get(i).getImage(),
-                    (drawables.get(i).getX() - drawables.get(0).getX() + (MainWindow.WINDOW_WIDTH/2))*scaleX,
-                    (drawables.get(i).getY() - drawables.get(0).getY() + (MainWindow.WINDOW_HEIGHT/2))*scaleY,
+                    (drawables.get(i).getX() - player.getX() + (MainWindow.WINDOW_WIDTH/2))*scaleX,
+                    (drawables.get(i).getY() - player.getY() + (MainWindow.WINDOW_HEIGHT/2))*scaleY,
                     this);
         }
     }
 
-    private void paintBackground(Graphics2D g){
-        g.drawImage(background,
-                (-drawables.get(0).getX())/3,
-                (-drawables.get(0).getY())/3,
+    private void paintForeground(Graphics2D g){
+        g.drawImage(world,
+                (-player.getX() + (MainWindow.WINDOW_WIDTH/2)),
+                (-player.getY() + (MainWindow.WINDOW_HEIGHT/2)),
                 this);
+    }
+
+    private void paintBackground(Graphics2D g){
+        g.drawImage(clipImage(background),
+                (player.getX())/3,
+                (player.getY())/3,
+                this);
+    }
+
+    private BufferedImage clipImage(BufferedImage uncut){
+        return uncut.getSubimage(
+                player.getX() - (MainWindow.WINDOW_WIDTH/2),
+                player.getY() - (MainWindow.WINDOW_HEIGHT/2),
+                MainWindow.WINDOW_WIDTH,
+                MainWindow.WINDOW_HEIGHT);
     }
 }

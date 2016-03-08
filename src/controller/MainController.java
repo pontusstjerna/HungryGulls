@@ -41,6 +41,7 @@ public class MainController implements ActionListener {
         playerController.update();
         world.update();
         frame.repaint();
+        System.out.println("Fps: " + (1/getDeltaTime()));
         setDeltaTime();
     }
 
