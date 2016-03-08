@@ -10,8 +10,7 @@ import java.util.List;
 public abstract class PickUpAble extends Character {
     public static List<PickUpAble> pickUpAbles = new ArrayList<>();
 
-    public PickUpAble(String name, double x, double y){
-        super(name, x, y);
+    public PickUpAble(){
         pickUpAbles.add(this);
     }
 

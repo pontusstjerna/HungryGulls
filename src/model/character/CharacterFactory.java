@@ -10,12 +10,12 @@ import model.character.characters.PlayerGull;
  */
 public class CharacterFactory {
 
-    public static IPlayable createPlayer(String name, double x, double y){
-        return new PlayerGull(name, x, y);
+    public static IPlayable createPlayer(double x, double y){
+        return new PlayerGull(x, y);
     }
 
-    public static IDrawable createMackerel(String name, double x, double y){
-        return new Mackerel(name, x, y);
+    public static IDrawable createMackerel(double x, double y){
+        return new Mackerel(x, y);
     }
 
 }

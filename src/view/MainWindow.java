@@ -1,17 +1,21 @@
 package view;
 
 import model.IDrawable;
+import model.ImageHandler;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyListener;
 import java.util.List;
 
 /**
  * Created by Pontus on 2016-03-04.
  */
-public class MainWindow extends JFrame {
-    public static final int WINDOW_WIDTH = 800;
-    public static final int WINDOW_HEIGHT = 600;
+public class MainWindow extends JFrame implements ComponentListener {
+    public static int WINDOW_WIDTH = 800;
+    public static int WINDOW_HEIGHT = 600;
 
     private final String title;
     private MainSurface surface;
@@ -22,7 +26,9 @@ public class MainWindow extends JFrame {
 
     public void init(List<IDrawable> drawables){
         initWindow();
-        initSurface(drawables);
+        surface = initSurface(drawables);
+        add(surface);
+        System.out.println("View initialized!");
     }
 
     @Override
@@ -32,6 +38,7 @@ public class MainWindow extends JFrame {
 
     public void registerKeyListener(KeyListener listener){
         surface.addKeyListener(listener);
+        surface.addComponentListener(this);
     }
 
     private void initWindow(){
@@ -42,9 +49,31 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    private void initSurface(List<IDrawable> drawables){
-        surface = new MainSurface();
-        surface.init(drawables);
-        add(surface);
+    private MainSurface initSurface(List<IDrawable> drawables){
+        return new MainSurface(drawables, createBackground());
+    }
+
+    private Image createBackground(){
+        return ImageHandler.loadImage("Background");
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        WINDOW_WIDTH = e.getComponent().getWidth();
+        WINDOW_HEIGHT = e.getComponent().getHeight();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+
     }
 }

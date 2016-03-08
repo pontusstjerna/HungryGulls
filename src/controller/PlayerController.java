@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * Created by Pontus on 2016-03-05.
@@ -17,6 +18,7 @@ public class PlayerController implements KeyListener {
 
     public PlayerController(IPlayable player){
         this.player = player;
+        System.out.println("PlayerController initialized!");
     }
 
     @Override

@@ -15,7 +15,7 @@ public class World implements IDrawable {
     public static final int WORLD_HEIGHT = 1000;
 
     private IPlayable player;
-    private List<IDrawable> characters = new ArrayList<>();
+    private List<IDrawable> objects = new ArrayList<>();
     private BufferedImage worldImage;
 
     public World(){
@@ -31,22 +31,22 @@ public class World implements IDrawable {
     }
 
     public List<IDrawable> getDrawables(){
-        return characters;
+        return objects;
     }
 
     private void createWorld(){
         worldImage = ImageHandler.loadImage(getClass().getSimpleName());
         createCharacters();
 
-        System.out.println("World created with " + (characters.size() - 1) + " characters.");
+        System.out.println("World created with " + (objects.size() - 1) + " objects.");
     }
 
     private void createCharacters(){
-        player = CharacterFactory.createPlayer("PlayerGull", 500, 500);
-        characters.add(player);
-        characters.add(this);
-        characters.add(CharacterFactory.createMackerel("Mackerel 1", 100, 300));
-        characters.add(CharacterFactory.createMackerel("Mackerel 2", 100, 50));
+        player = CharacterFactory.createPlayer(500, 500);
+        objects.add(player);
+        objects.add(this);
+        objects.add(CharacterFactory.createMackerel(100, 300));
+        objects.add(CharacterFactory.createMackerel(100, 50));
     }
 
     @Override
@@ -66,6 +66,6 @@ public class World implements IDrawable {
 
     @Override
     public String toString(){
-        return "World with " + (characters.size() - 1) + " characters.";
+        return "World with " + (objects.size() - 1) + " objects.";
     }
 }

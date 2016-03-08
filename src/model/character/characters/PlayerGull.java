@@ -9,18 +9,18 @@ import model.character.PickUpAble;
 public class PlayerGull extends Character implements IPlayable {
     private int health = 100;
     private PickUpAble pickedUp;
+    private final int PICKUP_DISTANCE = 50;
 
-    public PlayerGull(String name, double x, double y){
-        super(name, x, y);
-        speedX /= 1;
-        speedY /= 1;
+    public PlayerGull(double x, double y){
+        position.x = x;
+        position.y = y;
     }
 
     @Override
     public void pickUp(){
         if(pickedUp == null){
             PickUpAble closest = closestPickup();
-            if(pickUpWithinReach(closest, 10)){
+            if(pickUpWithinReach(closest, PICKUP_DISTANCE)){
                 pickedUp = closest;
                 closest.lockToCharacter(this);
             }

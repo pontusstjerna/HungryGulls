@@ -26,8 +26,8 @@ public class MainController implements ActionListener {
     }
 
     public void startGame(){
-        initWorld();
-        initPlayerControls();
+        world = initWorld();
+        playerController = initPlayerControls(world);
         initView();
         initTimer();
         timer.start();
@@ -48,25 +48,22 @@ public class MainController implements ActionListener {
         return deltaTime;
     }
 
-    private void initPlayerControls(){
-        playerController = new PlayerController(world.getPlayer());
+    private PlayerController initPlayerControls(World world){
+        return new PlayerController(world.getPlayer());
     }
 
     private void initView(){
         frame = new MainWindow("Hungry Gulls");
         frame.init(world.getDrawables());
         frame.registerKeyListener(playerController);
-
-        System.out.println("View initialized!");
     }
 
     private void initTimer(){
         timer = new Timer(DELAY, this);
     }
 
-    private void initWorld(){
-        world = new World();
-        System.out.println("World initialized!");
+    private World initWorld(){
+        return new World();
     }
 
     private void setDeltaTime(){

@@ -11,34 +11,48 @@ import java.util.List;
  */
 public class MainSurface extends JPanel {
     List<IDrawable> drawables;
+    Image background;
 
-    public void init(List<IDrawable> drawables){
+    private int scaleX = 1;
+    private int scaleY = 1;
+
+    public MainSurface(List<IDrawable> drawables, Image background){
         setFocusable(true);
         this.drawables = drawables;
+        this.background = background;
+        System.out.println("Surface initialized!");
     }
 
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-
         super.paintComponent(g);
 
-        int playerX = drawables.get(0).getX();
-        int playerY = drawables.get(0).getY();
-
-        for(int i = 1; i < drawables.size(); i++){
-            g2d.drawString(drawables.get(i).toString(), drawables.get(i).getX() - playerX + (MainWindow.WINDOW_WIDTH/2),
-                    drawables.get(i).getY() - playerY + (MainWindow.WINDOW_HEIGHT/2));
-
-            g.drawImage(drawables.get(i).getImage(), drawables.get(i).getX() - playerX + (MainWindow.WINDOW_WIDTH/2),
-                    drawables.get(i).getY() - playerY + (MainWindow.WINDOW_HEIGHT/2), this);
-        }
-
+        paintBackground(g2d);
+        paintDrawables(g2d);
         paintPlayer(g2d);
     }
 
     private void paintPlayer(Graphics2D g){
-        g.drawString(drawables.get(0).toString(), MainWindow.WINDOW_WIDTH/2, MainWindow.WINDOW_HEIGHT/2);
-        g.drawImage(drawables.get(0).getImage(),MainWindow.WINDOW_WIDTH/2, MainWindow.WINDOW_HEIGHT/2, this);
+        g.drawImage(drawables.get(0).getImage(),
+                (MainWindow.WINDOW_WIDTH/2), //Should be player.width/2
+                (MainWindow.WINDOW_HEIGHT/2),
+                this);
+    }
+
+    private void paintDrawables(Graphics2D g){ //From model to view coordinates
+        for(int i = 1; i < drawables.size(); i++){ //Loop without first element
+            g.drawImage(drawables.get(i).getImage(),
+                    (drawables.get(i).getX() - drawables.get(0).getX() + (MainWindow.WINDOW_WIDTH/2))*scaleX,
+                    (drawables.get(i).getY() - drawables.get(0).getY() + (MainWindow.WINDOW_HEIGHT/2))*scaleY,
+                    this);
+        }
+    }
+
+    private void paintBackground(Graphics2D g){
+        g.drawImage(background,
+                (-drawables.get(0).getX())/3,
+                (-drawables.get(0).getY())/3,
+                this);
     }
 }

@@ -21,11 +21,12 @@ public abstract class Character implements IDrawable {
     protected double speedX = 1;
     protected double speedY = 1;
     protected String name = "Unnamed.";
-
-    public Character(String name, double x, double y){
+    protected int width = 100;
+    protected int height = 100;
+    public Character(){
         characters.add(this);
-        this.name = name;
-        position = new Point.Double(x,y);
+        name = getClass().getSimpleName();
+        position = new Point.Double(0,0);
         image = ImageHandler.loadImage(getClass().getSimpleName());
     }
 
@@ -90,7 +91,7 @@ public abstract class Character implements IDrawable {
     }*/
 
     private void moveRight(){
-        if(position.x < World.WORLD_WIDTH) {
+        if(position.x < World.WORLD_WIDTH - width) {
             position.x += speedX;
         }
     }
@@ -108,7 +109,7 @@ public abstract class Character implements IDrawable {
     }
 
     private void moveDown(){
-        if(position.y < World.WORLD_HEIGHT) {
+        if(position.y < World.WORLD_HEIGHT - height) {
             position.y += speedY;
         }
     }
