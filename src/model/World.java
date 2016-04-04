@@ -40,7 +40,7 @@ public class World{
     }
 
     private void createCharacters(){
-        player = CharacterFactory.createPlayer(500, 500);
+        player = CharacterFactory.createPlayer(1000, 1000);
         objects.add(player);
         objects.add(CharacterFactory.createMackerel(100, 300));
         objects.add(CharacterFactory.createMackerel(100, 50));

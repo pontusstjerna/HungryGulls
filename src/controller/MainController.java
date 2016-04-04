@@ -10,14 +10,14 @@ import java.awt.event.ActionListener;
 /**
  * Created by Pontus on 2016-03-04.
  */
-public class MainController implements ActionListener {
+public final class MainController implements ActionListener {
     private MainWindow frame;
     private Timer timer;
     private World world;
     private PlayerController playerController;
 
     private double tempTime;
-    private double deltaTime;
+    private static double deltaTime;
 
     private final int DELAY = 5;
 
@@ -27,7 +27,10 @@ public class MainController implements ActionListener {
 
     public void startGame(){
         world = initWorld();
+
+        //Initialize the player controls
         playerController = initPlayerControls(world);
+
         initView();
         initTimer();
         timer.start();
@@ -41,11 +44,11 @@ public class MainController implements ActionListener {
         playerController.update();
         world.update();
         frame.repaint();
-        System.out.println("Fps: " + (1/getDeltaTime()));
+        //System.out.println("Fps: " + (1/getDeltaTime()));
         setDeltaTime();
     }
 
-    public double getDeltaTime(){
+    public static double getDeltaTime(){
         return deltaTime;
     }
 
@@ -57,6 +60,7 @@ public class MainController implements ActionListener {
         frame = new MainWindow("Hungry Gulls");
         frame.init(world.getDrawables());
         frame.registerKeyListener(playerController);
+        frame.registerKeyListener(new GameController());
     }
 
     private void initTimer(){
