@@ -9,20 +9,27 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.character.Character.State.IDLE;
+
 /**
  * Created by Pontus on 2016-03-04.
  */
 public abstract class Character implements IDrawable {
     public enum Direction {RIGHT, LEFT, UP, DOWN}
+    public enum State {MOVING, IDLE, SPECIAL}
     public List<Character> characters = new ArrayList<>();
 
     protected BufferedImage image;
     protected Point.Double position;
-    protected double speedX = 1;
-    protected double speedY = 1;
+    protected double speedX = 100;
+    protected double speedY = 100;
     protected String name = "Unnamed.";
     protected int width = 100;
     protected int height = 100;
+
+    protected Direction dir = Direction.RIGHT;
+    protected State state = State.IDLE;
+
     public Character(){
         characters.add(this);
         name = getClass().getSimpleName();
@@ -48,6 +55,9 @@ public abstract class Character implements IDrawable {
     }
 
     @Override
+    public State getState(){ return state; }
+
+    @Override
     public int getX(){
         return (int)position.x;
     }
@@ -57,19 +67,21 @@ public abstract class Character implements IDrawable {
         return (int)position.y;
     }
 
-    public void move(Direction dir){
+    public void move(Direction dir, double dTime){
+        this.dir = dir;
+        state = State.MOVING;
         switch(dir){
             case RIGHT:
-                moveRight();
+                moveRight(dTime);
                 break;
             case LEFT:
-                moveLeft();
+                moveLeft(dTime);
                 break;
             case UP:
-                moveUp();
+                moveUp(dTime);
                 break;
             case DOWN:
-                moveDown();
+                moveDown(dTime);
                 break;
         }
     }
@@ -90,27 +102,27 @@ public abstract class Character implements IDrawable {
         return image;
     }*/
 
-    private void moveRight(){
+    private void moveRight(double dTime){
         if(position.x < World.WORLD_WIDTH - width) {
-            position.x += speedX;
+            position.x += speedX*dTime;
         }
     }
 
-    private void moveLeft(){
+    private void moveLeft(double dTime){
         if(position.x > 0){
-            position.x -= speedX;
+            position.x -= speedX*dTime;
         }
     }
 
-    private void moveUp(){
+    private void moveUp(double dTime){
         if(position.y > 0) {
-            position.y -= speedY;
+            position.y -= speedY*dTime;
         }
     }
 
-    private void moveDown(){
+    private void moveDown(double dTime){
         if(position.y < World.WORLD_HEIGHT - height) {
-            position.y += speedY;
+            position.y += speedY*dTime;
         }
     }
 }

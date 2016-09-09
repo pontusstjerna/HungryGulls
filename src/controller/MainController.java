@@ -12,12 +12,12 @@ import java.awt.event.ActionListener;
  */
 public final class MainController implements ActionListener {
     private MainWindow frame;
-    private Timer timer;
     private World world;
     private PlayerController playerController;
 
     private double tempTime;
     private static double deltaTime;
+    private static int FPS = 0;
 
     private final int DELAY = 5;
 
@@ -26,17 +26,16 @@ public final class MainController implements ActionListener {
     }
 
     public void startGame(){
-        world = initWorld();
+        world = new World();
 
         //Initialize the player controls
-        playerController = initPlayerControls(world);
+        playerController = new PlayerController(world.getPlayer());
 
         initView();
-        initTimer();
-        timer.start();
+        new Timer(DELAY, this).start();
+
         System.out.println("Game started!");
         System.out.println("------------------------------");
-
     }
 
     @Override
@@ -44,36 +43,39 @@ public final class MainController implements ActionListener {
         playerController.update();
         world.update();
         frame.repaint();
-        //System.out.println("Fps: " + (1/getDeltaTime()));
         setDeltaTime();
+        setFPS();
     }
 
-    public static double getDeltaTime(){
-        return deltaTime;
-    }
-
-    private PlayerController initPlayerControls(World world){
-        return new PlayerController(world.getPlayer());
+    public static double getDeltaTime(){return deltaTime;}
+    public static double getFPS(){
+        return FPS;
     }
 
     private void initView(){
         frame = new MainWindow("Hungry Gulls");
         frame.init(world.getDrawables());
+
+        //Controller for player/gull
         frame.registerKeyListener(playerController);
-        frame.registerKeyListener(new GameController());
-    }
 
-    private void initTimer(){
-        timer = new Timer(DELAY, this);
-    }
-
-    private World initWorld(){
-        return new World();
+        //Controller for UI-features
+        frame.registerKeyListener(new UIController());
     }
 
     private void setDeltaTime(){
         long currentTime = System.currentTimeMillis();
         deltaTime = (currentTime - tempTime)/1000;
         tempTime = currentTime;
+    }
+
+    private double timePassed = 0;
+    private void setFPS(){
+        final int fpsUpdateInterval = 1;
+        timePassed += deltaTime;
+        if(timePassed > fpsUpdateInterval){
+            FPS = (int)(1/deltaTime);
+            timePassed = 0;
+        }
     }
 }

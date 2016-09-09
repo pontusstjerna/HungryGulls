@@ -73,7 +73,7 @@ public class PlayerController implements KeyListener {
 
     public void update(){
         for(Direction dir : movements){
-            player.move(dir);
+            player.move(dir, MainController.getDeltaTime());
         }
     }
 

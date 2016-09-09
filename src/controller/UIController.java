@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 /**
  * Created by pontu on 2016-04-04.
  */
-public class GameController implements KeyListener {
+public class UIController implements KeyListener {
 
     private boolean showFps = false;
 

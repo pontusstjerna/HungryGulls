@@ -1,6 +1,6 @@
 package view;
 
-import controller.GameController;
+import controller.UIController;
 import controller.MainController;
 import model.IDrawable;
 import model.World;
@@ -38,7 +38,7 @@ public class MainSurface extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g);
 
-        //paintBackground(g2d);
+        paintBackground(g2d);
         paintForeground(g2d);
         paintDrawables(g2d);
         paintPlayer(g2d);
@@ -88,8 +88,8 @@ public class MainSurface extends JPanel {
 
     private void paintFps(Graphics2D g){
         try{
-            if(((GameController)getKeyListeners()[1]).getShowFps()){ //Check if player has enabled fps
-                g.drawString("FPS: " + (int)(1/MainController.getDeltaTime()), MainWindow.WINDOW_WIDTH*9/20,
+            if(((UIController)getKeyListeners()[1]).getShowFps()){ //Check if player has enabled fps
+                g.drawString("FPS: " + MainController.getFPS(), MainWindow.WINDOW_WIDTH*9/20,
                         MainWindow.WINDOW_HEIGHT*3/4);
             }
         }catch (ClassCastException e){

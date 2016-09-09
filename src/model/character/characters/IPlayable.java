@@ -7,7 +7,7 @@ import model.character.Character;
  * Created by Pontus on 2016-03-05.
  */
 public interface IPlayable extends IDrawable{
-    void move(Character.Direction direction);
+    void move(Character.Direction direction, double dTime);
     void pickUp();
     void drop();
     boolean hasPickup();

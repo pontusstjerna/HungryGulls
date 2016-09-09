@@ -1,5 +1,7 @@
 package model;
 
+import model.character.Character;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -9,5 +11,6 @@ public interface IDrawable {
     int getX();
     int getY();
     BufferedImage getImage();
+    Character.State getState();
     String toString();
 }
